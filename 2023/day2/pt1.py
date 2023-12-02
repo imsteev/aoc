@@ -65,5 +65,3 @@ for game_num, rounds in GAMES.items():
     all_rounds_pass = all(does_round_pass(round, ACTUAL_COUNTS) for round in rounds)
     if all_rounds_pass:
         id_sum += game_num
-
-print(id_sum)
