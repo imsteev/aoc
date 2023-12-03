@@ -1,7 +1,7 @@
-from .. import parse
+import aoc2023.parse
 
 GAMES = {}
-for line in parse.read_input():
+for line in aoc2023.parse.read_input():
 
     game_str, rounds_str = line.split(': ')
     game_num = int(game_str.split(' ')[1])
