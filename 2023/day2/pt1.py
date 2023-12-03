@@ -24,28 +24,22 @@ def is_possible(game, max_colors) -> bool:
     return False
 """
 
-input = []
-with open('input.txt', 'r') as f:
-    input = f.read().splitlines()
+from .. import parse
 
+ACTUAL_COUNTS = {'red': 12, 'green': 13, 'blue': 14}  # this comes from your prompt
+
+# Get input in a format that we can easily work with.
 GAMES = {}
+for line in parse.read_input():
 
-"""
-Example line looks like:
-
-Game 5: 17 red, 5 blue, 3 green; 8 green, 9 red, 10 blue; 2 green, 9 blue, 4 red
-
-"""
-for line in input:
-
+    # Parse game number
     game_str, rounds_str = line.split(': ')
     game_num = int(game_str.split(' ')[1])
 
-    # each round looks like "17 red, 5 blue, 3 green"
+    # A "round" is comprised of the counts of each color that the elf selected.
     rounds = []
     for r in rounds_str.split('; '):
 
-        # normalize the round into an object
         round = {}
         for cube in r.strip().split(', '):
             count, color = cube.split(' ')
@@ -56,12 +50,15 @@ for line in input:
     GAMES[game_num] = rounds
 
 
-def does_round_pass(round, actual_color_counts):
-    return all(count <= actual_color_counts[color] for color, count in round.items())
+def does_round_pass(round, cube_counts):
+    return all(count <= cube_counts[color] for color, count in round.items())
 
-ACTUAL_COUNTS = {'red': 12, 'green': 13, 'blue': 14}
-id_sum = 0
-for game_num, rounds in GAMES.items():
-    all_rounds_pass = all(does_round_pass(round, ACTUAL_COUNTS) for round in rounds)
-    if all_rounds_pass:
-        id_sum += game_num
+def calculate_answer():
+    id_sum = 0
+    for game_num, rounds in GAMES.items():
+        all_rounds_pass = all(does_round_pass(round, ACTUAL_COUNTS) for round in rounds)
+        if all_rounds_pass:
+            id_sum += game_num
+    return id_sum
+
+print(calculate_answer())
