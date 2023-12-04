@@ -1,7 +1,9 @@
-import aoc2023.parse
+input = []
+with open('input.txt', 'r') as f:
+    input = f.read().splitlines()
 
 GAMES = {}
-for line in aoc2023.parse.read_input():
+for line in input:
 
     game_str, rounds_str = line.split(': ')
     game_num = int(game_str.split(' ')[1])

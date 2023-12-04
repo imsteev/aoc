@@ -24,13 +24,15 @@ def is_possible(game, max_colors) -> bool:
     return False
 """
 
-import aoc2023.parse
+input = []
+with open('input.txt', 'r') as f:
+    input = f.read().splitlines()
 
 ACTUAL_COUNTS = {'red': 12, 'green': 13, 'blue': 14}  # this comes from your prompt
 
 # Get input in a format that we can easily work with.
 GAMES = {}
-for line in aoc2023.parse.read_input():
+for line in input:
 
     # Parse game number
     game_str, rounds_str = line.split(': ')
