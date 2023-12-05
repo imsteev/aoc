@@ -1,10 +1,3 @@
-import copy
-
-input = []
-with open('input.txt', 'r') as f:
-    input = f.read().splitlines()
-
-
 def get_number_and_mark_seen(row, start_pos):
     num_str = str(row[start_pos])
     row[start_pos] = '.'
@@ -28,14 +21,15 @@ def get_number_and_mark_seen(row, start_pos):
 DIRECTIONS = [(-1,-1), (-1, 0), (-1, +1), (0, +1), (+1, +1),(+1, 0),(+1,-1), (0, -1)]
 
 # turn into 2d-array
-schematic = [list(l) for l in input]
+def parse_schematic(input):
+    return [list(l) for l in input]
 
-def part1():
+def part1(input):
     """
     Find all the numbers adjacent to a symbol (any non-digit, non-period character)
     and add them together. Once a number is used, it cannot be used again.
     """
-    grid = copy.deepcopy(schematic)
+    grid = parse_schematic(input)
     len_y = len(grid)
     len_x = len(grid[0])
 
@@ -50,14 +44,13 @@ def part1():
                         total += get_number_and_mark_seen(grid[y], x)
     return total
 
-print(f"answer to part 1: {part1()}")
 
-def part2():
+def part2(input):
     """
     Find all the numbers adjacent to a gear ("*").
     Only add the gear ratio if the length of these numbers is equal to 2.
     """
-    grid = copy.deepcopy(schematic)
+    grid = parse_schematic(input)
     len_y = len(grid)
     len_x = len(grid[0])
 
@@ -79,4 +72,11 @@ def part2():
 
     return total
 
-print(f"answer to part 2: {part2()}")
+
+if __name__ == '__main__':
+    input = []
+    with open('input.txt', 'r') as f:
+        input = f.read().splitlines()
+
+    print(f'answer to part 1: {part1(input)}')
+    print(f'answer to part 2: {part2(input)}')
